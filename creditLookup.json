@@ -1,0 +1,92 @@
+[
+  {
+    "applicantID": 123456,
+    "creditScore": 720,
+    "latePayments": 2,
+    "monthsJob": 24,
+    "dtiRatio": 0.2314,
+    "loanAmt": 125000,
+    "liquidAssets": 18250,
+    "numCC": 12
+  },
+  {
+    "applicantID": 333444,
+    "creditScore": 620,
+    "latePayments": 4,
+    "monthsJob": 20,
+    "dtiRatio": 0.35,
+    "loanAmt": 174851,
+    "liquidAssets": 1025,
+    "numCC": 10
+  },
+  {
+    "applicantID": 222333,
+    "creditScore": 525,
+    "latePayments": 29,
+    "monthsJob": 105,
+    "dtiRatio": 0.382,
+    "loanAmt": 188500,
+    "liquidAssets": 10500,
+    "numCC": 19
+  },
+  {
+    "applicantID": 444555,
+    "creditScore": 575,
+    "latePayments": 23,
+    "monthsJob": 315,
+    "dtiRatio": 0.7012,
+    "loanAmt": 168500,
+    "liquidAssets": 10575,
+    "numCC": 19
+  },
+  {
+    "applicantID": 555667,
+    "creditScore": 717,
+    "latePayments": 0,
+    "monthsJob": 12,
+    "dtiRatio": 0.191,
+    "loanAmt": 100000,
+    "liquidAssets": 12500,
+    "numCC": 32
+  },
+  {
+    "applicantID": 667888,
+    "creditScore": 787,
+    "latePayments": 0,
+    "monthsJob": 130,
+    "dtiRatio": 0.1727,
+    "loanAmt": 102500,
+    "liquidAssets": 32500,
+    "numCC": 12
+  },
+  {
+    "applicantID": 777888,
+    "creditScore": 707,
+    "latePayments": 5,
+    "monthsJob": 51,
+    "dtiRatio": 0.1927,
+    "loanAmt": 103500,
+    "liquidAssets": 12500,
+    "numCC": 18
+  },
+  {
+    "applicantID": 888999,
+    "creditScore": 615,
+    "latePayments": 15,
+    "monthsJob": 45,
+    "dtiRatio": 0.2327,
+    "loanAmt": 100000,
+    "liquidAssets": 2500,
+    "numCC": 14
+  },
+  {
+    "applicantID": 999000,
+    "creditScore": 675,
+    "latePayments": 22,
+    "monthsJob": 32,
+    "dtiRatio": 0.482,
+    "loanAmt": 98000,
+    "liquidAssets": 2500,
+    "numCC": 17
+  }
+]

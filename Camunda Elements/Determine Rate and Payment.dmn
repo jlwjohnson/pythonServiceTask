@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="risk" name="Loan Risk" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Web Modeler" exporterVersion="91c12b1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <decision id="determine-rate-and-payment" name="Determine Rate and Payment">
+    <informationRequirement id="InformationRequirement_03vq7y0">
+      <requiredInput href="#loanAmt" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1p3sxa2">
+      <requiredInput href="#creditScore" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1en45zz">
+      <requiredInput href="#InputData_1hij6o2" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_11l5fn6" hitPolicy="FIRST">
+      <input id="Input_1" label="CreditScore">
+        <inputExpression id="InputExpression_1" typeRef="number">
+          <text>creditScore</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ac6xax" label="Loan Risk">
+        <inputExpression id="LiteralExpression_1hh40xb" typeRef="string">
+          <text>risk</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1goziyw" label="Requested Loan Amount">
+        <inputExpression id="LiteralExpression_0z3hcr4" typeRef="number">
+          <text>requestedLoan</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Interest Rate" name="interestRate" typeRef="number" />
+      <rule id="DecisionRule_17v7otd">
+        <inputEntry id="UnaryTests_0nhllzd">
+          <text>&gt; 720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1hq3vw5">
+          <text>"low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gig0bd">
+          <text>&gt;= 130000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y4520s">
+          <text>8.99</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0a73723">
+        <inputEntry id="UnaryTests_0f5x8ez">
+          <text>&gt; 720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j08bwg">
+          <text>"low","medium"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vi7ppg">
+          <text>&gt; 120000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15gyxii">
+          <text>9.99</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1wc3scg">
+        <inputEntry id="UnaryTests_07wfj83">
+          <text>&lt;= 720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08mh1c4">
+          <text>"medium"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x2g9tq">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0i2su0k">
+          <text>12.99</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_033ub5o">
+        <inputEntry id="UnaryTests_0hyp7y1">
+          <text>&lt;=720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mqug9f">
+          <text>"low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08l7dub">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0u162gv">
+          <text>11.99</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1g04s6c">
+        <inputEntry id="UnaryTests_07w9hs7">
+          <text>&gt; 720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zprlq9">
+          <text>"low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0helvin">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h603gr">
+          <text>10.99</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0t0o2q0">
+        <inputEntry id="UnaryTests_1rcjw3o">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b7ms80">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vttv41">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0d1w5oe">
+          <text>12.99</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="loanAmt" name="Requested Loan Amount" />
+  <inputData id="creditScore" name="Credit Score" />
+  <inputData id="InputData_1hij6o2" name="Loan Risk" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="determine-rate-and-payment">
+        <dc:Bounds height="80" width="180" x="330" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ixcx02" dmnElementRef="loanAmt">
+        <dc:Bounds height="45" width="125" x="147" y="87" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_160cbyj" dmnElementRef="InformationRequirement_03vq7y0">
+        <di:waypoint x="210" y="132" />
+        <di:waypoint x="375" y="250" />
+        <di:waypoint x="375" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0yeedmu" dmnElementRef="creditScore">
+        <dc:Bounds height="45" width="125" x="368" y="88" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0p49ys0" dmnElementRef="InformationRequirement_1p3sxa2">
+        <di:waypoint x="431" y="133" />
+        <di:waypoint x="420" y="250" />
+        <di:waypoint x="420" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_193ujb9" dmnElementRef="InputData_1hij6o2">
+        <dc:Bounds height="45" width="125" x="568" y="88" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nl3rgf" dmnElementRef="InformationRequirement_1en45zz">
+        <di:waypoint x="631" y="133" />
+        <di:waypoint x="465" y="250" />
+        <di:waypoint x="465" y="270" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

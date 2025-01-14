@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="80f67cc" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0" camunda:diagramRelationId="d4af8937-b8e5-454e-b5a5-5dfe74fe0e0f">
+  <bpmn:process id="Process_loanAppProcess" name="Loan Application Process" isExecutable="true">
+    <bpmn:startEvent id="start_submitApp" name="Submit Application">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="form_loanApp" />
+        <zeebe:properties>
+          <zeebe:property name="publicAccess" value="true" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0j9sq2l</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0j9sq2l" sourceRef="start_submitApp" targetRef="task_checkCreditScore" />
+    <bpmn:exclusiveGateway id="gateway_risk" name="Credit Risk Value?">
+      <bpmn:incoming>Flow_1k1ohur</bpmn:incoming>
+      <bpmn:outgoing>flow_high</bpmn:outgoing>
+      <bpmn:outgoing>flow_medium</bpmn:outgoing>
+      <bpmn:outgoing>flow_low</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1k1ohur" sourceRef="task_verifyRisk" targetRef="gateway_risk" />
+    <bpmn:sequenceFlow id="Flow_0yrob6y" sourceRef="task_checkCreditScore" targetRef="task_verifyRisk" />
+    <bpmn:serviceTask id="task_noLoan" name="Notify cannot provide loan" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="3" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0iIzk5RTFGNCIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSIjOTlFMUY0Ii8+CiAgICA8cGF0aCBkPSJNMC4yODU3MDYgMTUuNjg0Nkw1LjQzODM3IDE1LjY4NDRWMTUuNzE0M0gwLjI4NTcwNlYxNS42ODQ2Wk0wLjI4NTcwNiAxMC41NjE5SDUuNDM4MzdWMTUuNjg0NEwwLjI4NTcwNiAxNS42ODQ2VjEwLjU2MTlaIiBmaWxsPSIjMUE4MkUyIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAwLjI4NTcwNkgxMC41NjExVjUuNDA4NDdINS40MzgzN1YwLjI4NTcwNlpNMTAuNTYxNiA1LjQzODM3SDE1LjcxNDNWMTAuNTYxMUgxMC41NjE2VjUuNDM4MzdaIiBmaWxsPSIjMDBCM0UzIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAxMC41NjExTDEwLjU2MTEgMTAuNTYxNlY1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMVoiIGZpbGw9IiMwMDlERDkiLz4KICAgIDxwYXRoIGQ9Ik0xMC41NjExIDAuMjg1NzA2SDE1LjcxNDNWNS40MDg0N0gxMC41NjExVjAuMjg1NzA2WiIgZmlsbD0iIzFBODJFMiIvPgogICAgPHBhdGggZD0iTTEwLjU2MTEgNS40MDg0N0gxNS43MTQzVjUuNDM4MzdIMTAuNTYxNkwxMC41NjExIDUuNDA4NDdaIiBmaWxsPSIjMUE4MkUyIi8+Cjwvc3ZnPg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.SENDGRID_DEMO}}" target="apiKey" />
+          <zeebe:input source="Camundanzia Financial Lending" target="from.name" />
+          <zeebe:input source="demo@camunda.com" target="from.email" />
+          <zeebe:input source="=fullName" target="to.name" />
+          <zeebe:input source="=applicantEmail" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="We&#39;re sorry - we cannot provide a loan at this time" target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="=fullName + &#34;, we are sorry to inform you that we cannot provide you a loan for the requested $&#34; + string(requestedLoan) + &#34; amount at this time. This decision is based on your current credit score of &#34; + string(creditScore) + &#34;, number of credit cards (&#34; + string(numCC) + &#34;), and your number of late payments (&#34; + string(latePayments) + &#34;). We encourage you to apply again after a 6 month wait period. Thank you.&#34;" target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_generateRejection</bpmn:incoming>
+      <bpmn:outgoing>Flow_08wup22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="task_sendPaperwork" name="Send paperwork to start onboarding" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="3" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0iIzk5RTFGNCIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSIjOTlFMUY0Ii8+CiAgICA8cGF0aCBkPSJNMC4yODU3MDYgMTUuNjg0Nkw1LjQzODM3IDE1LjY4NDRWMTUuNzE0M0gwLjI4NTcwNlYxNS42ODQ2Wk0wLjI4NTcwNiAxMC41NjE5SDUuNDM4MzdWMTUuNjg0NEwwLjI4NTcwNiAxNS42ODQ2VjEwLjU2MTlaIiBmaWxsPSIjMUE4MkUyIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAwLjI4NTcwNkgxMC41NjExVjUuNDA4NDdINS40MzgzN1YwLjI4NTcwNlpNMTAuNTYxNiA1LjQzODM3SDE1LjcxNDNWMTAuNTYxMUgxMC41NjE2VjUuNDM4MzdaIiBmaWxsPSIjMDBCM0UzIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAxMC41NjExTDEwLjU2MTEgMTAuNTYxNlY1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMVoiIGZpbGw9IiMwMDlERDkiLz4KICAgIDxwYXRoIGQ9Ik0xMC41NjExIDAuMjg1NzA2SDE1LjcxNDNWNS40MDg0N0gxMC41NjExVjAuMjg1NzA2WiIgZmlsbD0iIzFBODJFMiIvPgogICAgPHBhdGggZD0iTTEwLjU2MTEgNS40MDg0N0gxNS43MTQzVjUuNDM4MzdIMTAuNTYxNkwxMC41NjExIDUuNDA4NDdaIiBmaWxsPSIjMUE4MkUyIi8+Cjwvc3ZnPg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.SENDGRID_DEMO}}" target="apiKey" />
+          <zeebe:input source="Camundanzia Financial Lending" target="from.name" />
+          <zeebe:input source="demo@camunda.com" target="from.email" />
+          <zeebe:input source="=fullName" target="to.name" />
+          <zeebe:input source="=applicantEmail" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="Please fill out the associated loan documentation " target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="=&#34;We are pleased to provide you the following loan for &#34; + string(requestedLoan) + &#34;. Please see the following link to accept your loan paperwork. \n&#34; + LoanDocUrl " target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0434ito</bpmn:incoming>
+      <bpmn:outgoing>Flow_03rryw3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="task_genLoanDocs" name="Generate loan documents" zeebe:modelerTemplate="io.camunda.connectors.GoogleDrive.v1" zeebe:modelerTemplateVersion="3" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgODcuMyA3OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KCTxwYXRoIGQ9Im02LjYgNjYuODUgMy44NSA2LjY1Yy44IDEuNCAxLjk1IDIuNSAzLjMgMy4zbDEzLjc1LTIzLjhoLTI3LjVjMCAxLjU1LjQgMy4xIDEuMiA0LjV6IiBmaWxsPSIjMDA2NmRhIi8+Cgk8cGF0aCBkPSJtNDMuNjUgMjUtMTMuNzUtMjMuOGMtMS4zNS44LTIuNSAxLjktMy4zIDMuM2wtMjUuNCA0NGE5LjA2IDkuMDYgMCAwIDAgLTEuMiA0LjVoMjcuNXoiIGZpbGw9IiMwMGFjNDciLz4KCTxwYXRoIGQ9Im03My41NSA3Ni44YzEuMzUtLjggMi41LTEuOSAzLjMtMy4zbDEuNi0yLjc1IDcuNjUtMTMuMjVjLjgtMS40IDEuMi0yLjk1IDEuMi00LjVoLTI3LjUwMmw1Ljg1MiAxMS41eiIgZmlsbD0iI2VhNDMzNSIvPgoJPHBhdGggZD0ibTQzLjY1IDI1IDEzLjc1LTIzLjhjLTEuMzUtLjgtMi45LTEuMi00LjUtMS4yaC0xOC41Yy0xLjYgMC0zLjE1LjQ1LTQuNSAxLjJ6IiBmaWxsPSIjMDA4MzJkIi8+Cgk8cGF0aCBkPSJtNTkuOCA1M2gtMzIuM2wtMTMuNzUgMjMuOGMxLjM1LjggMi45IDEuMiA0LjUgMS4yaDUwLjhjMS42IDAgMy4xNS0uNDUgNC41LTEuMnoiIGZpbGw9IiMyNjg0ZmMiLz4KCTxwYXRoIGQ9Im03My40IDI2LjUtMTIuNy0yMmMtLjgtMS40LTEuOTUtMi41LTMuMy0zLjNsLTEzLjc1IDIzLjggMTYuMTUgMjhoMjcuNDVjMC0xLjU1LS40LTMuMS0xLjItNC41eiIgZmlsbD0iI2ZmYmEwMCIvPgo8L3N2Zz4=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:google-drive:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="refresh" target="authentication.authType" />
+          <zeebe:input source="{{secrets.GOOGLE_CLIENT_ID}}" target="authentication.oauthClientId" />
+          <zeebe:input source="{{secrets.GOOGLE_CLIENT_SECRET}}" target="authentication.oauthClientSecret" />
+          <zeebe:input source="{{secrets.GOOGLE_REFRESH_TOKEN}}" target="authentication.oauthRefreshToken" />
+          <zeebe:input source="file" target="resource.type" />
+          <zeebe:input source="=&#34;Loan Documents for &#34; + string(applicantID)" target="resource.name" />
+          <zeebe:input source="1pkujT9q5bSe99-c43dcksJIq5L4qNHk6" target="resource.parent" />
+          <zeebe:input source="1cxowNTQEG8oxSSY-KBBT2aJSCfoKsBLkDYqYp-mDlVc" target="resource.template.id" />
+          <zeebe:input source="={&#10;  &#34;requests&#34;:[&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{applicantID}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(applicantID)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{fullName}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:fullName&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{applicantEmail}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:applicantEmail&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{requestedLoan}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(requestedLoan)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{numCC}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(numCC)&#10;      }&#10;    },  &#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{latePayments}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(latePayments)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{creditScore}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(creditScore)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{liquidAssets}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(liquidAssets)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{dtiRatio}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(dtiRatio)&#10;      }&#10;    },       &#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{interestRate}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(interestRate)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{estimatedPayment}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:string(estimatedPayment)&#10;      }&#10;    },&#10;    {&#10;      &#34;replaceAllText&#34;:{&#10;        &#34;containsText&#34;:{&#10;          &#34;text&#34;:&#34;{{DocumentDate}}&#34;,&#10;          &#34;matchCase&#34;:&#34;true&#34;&#10;        },&#10;        &#34;replaceText&#34;:today()&#10;      }&#10;    }&#10;  ]&#10;}" target="resource.template.variables" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;LoanDocId&#34;: response.googleDriveResourceId,&#10;  &#34;LoanDocUrl&#34;: response.googleDriveResourceUrl&#10;}" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1c5769n</bpmn:incoming>
+      <bpmn:outgoing>Flow_0434ito</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_AppRej" name="Approve or Reject">
+      <bpmn:incoming>flow_fromManual</bpmn:incoming>
+      <bpmn:outgoing>flow_approve</bpmn:outgoing>
+      <bpmn:outgoing>flow_reject</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="flow_high" name="high or do not lend" sourceRef="gateway_risk" targetRef="gateway_rejected">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=risk = "high" or risk = "dnl"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_medium" name="medium" sourceRef="gateway_risk" targetRef="task_reviewManually">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=risk = "medium"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_low" name="low" sourceRef="gateway_risk" targetRef="gateway_approved">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=risk = "low"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0434ito" sourceRef="task_genLoanDocs" targetRef="task_sendPaperwork" />
+    <bpmn:sequenceFlow id="flow_fromManual" sourceRef="task_reviewManually" targetRef="gateway_AppRej" />
+    <bpmn:sequenceFlow id="flow_approve" name="Approved" sourceRef="gateway_AppRej" targetRef="gateway_approved">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=decision[1] = "approve"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_reject" name="Rejected" sourceRef="gateway_AppRej" targetRef="gateway_rejected">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=decision[1] = "reject"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="end_accept" name="Loan accepted">
+      <bpmn:incoming>Flow_03rryw3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="end_reject" name="Loan rejected">
+      <bpmn:incoming>Flow_08wup22</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08wup22" sourceRef="task_noLoan" targetRef="end_reject" />
+    <bpmn:sequenceFlow id="Flow_03rryw3" sourceRef="task_sendPaperwork" targetRef="end_accept" />
+    <bpmn:serviceTask id="task_checkCreditScore" name="Check Credit Score" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateVersion="8" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE3LjAzMzUgOC45OTk5N0MxNy4wMzM1IDEzLjQ0NzUgMTMuNDI4MSAxNy4wNTI5IDguOTgwNjUgMTcuMDUyOUM0LjUzMzE2IDE3LjA1MjkgMC45Mjc3NjUgMTMuNDQ3NSAwLjkyNzc2NSA4Ljk5OTk3QzAuOTI3NzY1IDQuNTUyNDggNC41MzMxNiAwLjk0NzA4MyA4Ljk4MDY1IDAuOTQ3MDgzQzEzLjQyODEgMC45NDcwODMgMTcuMDMzNSA0LjU1MjQ4IDE3LjAzMzUgOC45OTk5N1oiIGZpbGw9IiM1MDU1NjIiLz4KPHBhdGggZD0iTTQuOTMxMjYgMTQuMTU3MUw2Ljc4MTA2IDMuNzE0NzFIMTAuMTM3NUMxMS4xOTE3IDMuNzE0NzEgMTEuOTgyNCAzLjk4MzIzIDEyLjUwOTUgNC41MjAyN0MxMy4wNDY1IDUuMDQ3MzYgMTMuMzE1IDUuNzMzNTggMTMuMzE1IDYuNTc4OTJDMTMuMzE1IDcuNDQ0MTQgMTMuMDcxNCA4LjE1NTIyIDEyLjU4NDEgOC43MTIxNUMxMi4xMDY3IDkuMjU5MTMgMTEuNDU1MyA5LjYzNzA1IDEwLjYyOTggOS44NDU5TDEyLjA2MTkgMTQuMTU3MUgxMC4zMzE1TDkuMDMzNjQgMTAuMDI0OUg3LjI0MzUxTDYuNTEyNTQgMTQuMTU3MUg0LjkzMTI2Wk03LjQ5NzExIDguNTkyODFIOS4yNDI0OEM5Ljk5ODMyIDguNTkyODEgMTAuNTkwMSA4LjQyMzc0IDExLjAxNzcgOC4wODU2MUMxMS40NTUzIDcuNzM3NTMgMTEuNjc0MSA3LjI2NTEzIDExLjY3NDEgNi42Njg0MkMxMS42NzQxIDYuMTkxMDYgMTEuNTI0OSA1LjgxODExIDExLjIyNjUgNS41NDk1OUMxMC45MjgyIDUuMjcxMTMgMTAuNDU1OCA1LjEzMTkgOS44MDkzNiA1LjEzMTlIOC4xMDg3NEw3LjQ5NzExIDguNTkyODFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K">
+      <bpmn:documentation>This is a lookup step to find out information out about the applicant</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="noAuth" target="authentication.type" />
+          <zeebe:input source="GET" target="method" />
+          <zeebe:input source="https://66830b954102471fa4c90d1f.mockapi.io/loanrisk/creditscore" target="url" />
+          <zeebe:input source="={&#10;  applicantID: applicantID&#10;}" target="queryParameters" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="20" target="readTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultExpression" value="={&#10;  creditScore: response.body.creditScore[1],&#10;  latePayments: response.body.latePayments[1],&#10;  dtiRatio: response.body.dtiRatio[1],&#10;  liquidAssets: response.body.liquidAssets[1],&#10;  numCC: response.body.numCC[1],&#10;  requestedLoan: response.body.loanAmt[1],&#10;  monthsJob: response.body.monthsJob[1]&#10;}" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0j9sq2l</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yrob6y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gateway_rejected" name="Rejected">
+      <bpmn:incoming>flow_high</bpmn:incoming>
+      <bpmn:incoming>flow_reject</bpmn:incoming>
+      <bpmn:outgoing>flow_generateRejection</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="flow_generateRejection" sourceRef="gateway_rejected" targetRef="task_noLoan" />
+    <bpmn:exclusiveGateway id="gateway_approved" name="Approved">
+      <bpmn:incoming>flow_low</bpmn:incoming>
+      <bpmn:incoming>flow_approve</bpmn:incoming>
+      <bpmn:outgoing>flow_generateApproval</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="flow_generateApproval" sourceRef="gateway_approved" targetRef="task_ratePaymentDetermination" />
+    <bpmn:userTask id="task_verifyRisk" name="Verify Risk">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="form_checkRisk" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0yrob6y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1k1ohur</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="task_reviewManually" name="Review Manually">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="form_reviewManually" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_medium</bpmn:incoming>
+      <bpmn:outgoing>flow_fromManual</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1c5769n" sourceRef="task_ratePaymentDetermination" targetRef="task_genLoanDocs" />
+    <bpmn:businessRuleTask id="task_ratePaymentDetermination" name="Determine Rate and Payment">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="determine-rate-and-payment" resultVariable="interestRate" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=requestedLoan * ((interestRate / 100) / 12) / (1 - (1 + (interestRate / 100) / 12) ** (-360))" target="estimatedPayment" />
+          <zeebe:output source="=interestRate" target="interestRate" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow_generateApproval</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c5769n</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_loanAppProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start_submitApp">
+        <dc:Bounds x="122" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="115" y="285" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_052knfm_di" bpmnElement="gateway_risk" isMarkerVisible="true">
+        <dc:Bounds x="575" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="533" y="285" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0pik4s2_di" bpmnElement="task_noLoan" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1190" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1crkjh2_di" bpmnElement="task_sendPaperwork" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1350" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mk41rr_di" bpmnElement="task_genLoanDocs" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1200" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17g26r4_di" bpmnElement="gateway_AppRej" isMarkerVisible="true">
+        <dc:Bounds x="885" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="866" y="213" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jslft6_di" bpmnElement="end_accept">
+        <dc:Bounds x="1512" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1495" y="465" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0clm60t_di" bpmnElement="end_reject">
+        <dc:Bounds x="1332" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1318" y="145" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0aqrvfc_di" bpmnElement="task_checkCreditScore" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="230" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0nyy0uv_di" bpmnElement="gateway_rejected" isMarkerVisible="true">
+        <dc:Bounds x="1005" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1058" y="103" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0n54mes_di" bpmnElement="gateway_approved" isMarkerVisible="true">
+        <dc:Bounds x="885" y="415" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="946" y="423" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cpuzky_di" bpmnElement="task_verifyRisk" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="400" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_026f8ht_di" bpmnElement="task_reviewManually" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="720" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c6z6sq_di" bpmnElement="task_ratePaymentDetermination" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1040" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0j9sq2l_di" bpmnElement="Flow_0j9sq2l">
+        <di:waypoint x="158" y="260" />
+        <di:waypoint x="230" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k1ohur_di" bpmnElement="Flow_1k1ohur">
+        <di:waypoint x="500" y="260" />
+        <di:waypoint x="575" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yrob6y_di" bpmnElement="Flow_0yrob6y">
+        <di:waypoint x="330" y="260" />
+        <di:waypoint x="400" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dubqog_di" bpmnElement="flow_high">
+        <di:waypoint x="600" y="235" />
+        <di:waypoint x="600" y="120" />
+        <di:waypoint x="1005" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="625" y="86" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nakxf5_di" bpmnElement="flow_medium">
+        <di:waypoint x="625" y="260" />
+        <di:waypoint x="720" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="641" y="243" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17m6m0h_di" bpmnElement="flow_low">
+        <di:waypoint x="600" y="285" />
+        <di:waypoint x="600" y="440" />
+        <di:waypoint x="885" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="652" y="423" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0434ito_di" bpmnElement="Flow_0434ito">
+        <di:waypoint x="1300" y="440" />
+        <di:waypoint x="1350" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_081c8rb_di" bpmnElement="flow_fromManual">
+        <di:waypoint x="820" y="260" />
+        <di:waypoint x="885" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g290m4_di" bpmnElement="flow_approve">
+        <di:waypoint x="910" y="285" />
+        <di:waypoint x="910" y="415" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="856" y="333" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lh38tu_di" bpmnElement="flow_reject">
+        <di:waypoint x="935" y="260" />
+        <di:waypoint x="1030" y="260" />
+        <di:waypoint x="1030" y="145" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="980" y="273" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08wup22_di" bpmnElement="Flow_08wup22">
+        <di:waypoint x="1290" y="120" />
+        <di:waypoint x="1332" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03rryw3_di" bpmnElement="Flow_03rryw3">
+        <di:waypoint x="1450" y="440" />
+        <di:waypoint x="1512" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t7qgy7_di" bpmnElement="flow_generateRejection">
+        <di:waypoint x="1055" y="120" />
+        <di:waypoint x="1190" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04p6fqn_di" bpmnElement="flow_generateApproval">
+        <di:waypoint x="935" y="440" />
+        <di:waypoint x="1040" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c5769n_di" bpmnElement="Flow_1c5769n">
+        <di:waypoint x="1140" y="440" />
+        <di:waypoint x="1200" y="440" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
